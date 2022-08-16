@@ -1,5 +1,6 @@
 const placementConstraints = {
 
+  // The placementConstraints object is used to specify placement constraints.
 
   directions: {
     top: 'top',
@@ -25,11 +26,6 @@ const placementConstraints = {
       diagonalUp:     function(x,y,i) { return {x: x+i, y: y-i}; },
       diagonalUpBack: function(x,y,i) { return {x: x-i, y: y-i}; }
     },
-
- 
-
-
-
 
 };
 // End Placement.js
