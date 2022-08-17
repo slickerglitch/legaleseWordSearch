@@ -1,19 +1,19 @@
 //#region Global
 
-var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
-var orientations = [
-   'horizontal',
-   'horizontalBack',
-   'vertical',
-   'verticalUp',
-   'diagonal',
-   'diagonalUp',
-   'diagonalBack',
-   'diagonalUpBack',
-];
+// const orientations = [
+//    'horizontal',
+//    'horizontalBack',
+//    'vertical',
+//    'verticalUp',
+//    'diagonal',
+//    'diagonalUp',
+//    'diagonalBack',
+//    'diagonalUpBack',
+// ];
 
-var orientCoords = {
+const orientCoords = {
   horizontal: function (x, y, i) {
     return { x: x + i, y: y };
   },
@@ -22,7 +22,7 @@ var orientCoords = {
   },
   vertical: function (x, y, i) {
     return { x: x, y: y + i };
-  },
+  }, 
   verticalUp: function (x, y, i) {
     return { x: x, y: y - i };
   },
@@ -40,7 +40,7 @@ var orientCoords = {
   }
 };
 
-var validOrientations = {
+const validOrientations = {
   horizontal: function (x, y, h, w, l) {
         return w >= x + l;
       },
@@ -67,7 +67,7 @@ var validOrientations = {
       },
   };
 
-var options = {
+const options = {
          height: opts.height || wordList[0].length,
           width: opts.width || wordList[0].length,
    orientations: opts.orientations || allOrientations,
