@@ -50,5 +50,5 @@ function makeSquare(element, size, character){
 }
 
 // using the function
-makeSquare(document.querySelector('#square'), 5, '*')
+makeSquare(document.querySelector('#square'), 5, '*');
 
