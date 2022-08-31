@@ -1,87 +1,62 @@
-//#region Global
+(function (document, $, wordsearch) {
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  // const Wordsearch = function () {
+  //   Wordsearch.prototype.blanks = function (words, options) { };
+  // };
 
-// const orientations = [
-//    'horizontal',
-//    'horizontalBack',
-//    'vertical',
-//    'verticalUp',
-//    'diagonal',
-//    'diagonalUp',
-//    'diagonalBack',
-//    'diagonalUpBack',
-// ];
+  const drawBoard = (element, drawBoard) => { 
+    let row = board[y],
+      height = board.length,
+      width = row.length,
+      output = ''; // output string
+   
+    for (let y = 0; y < height; y++) {
+      output += '<div>'; // Each row must be contained in its own div
 
-const orientCoords = {
-  horizontal: function (x, y, i) {
-    return { x: x + i, y: y };
-  },
-  horizontalBack: function (x, y, i) {
-    return { x: x - i, y: y };
-  },
-  vertical: function (x, y, i) {
-    return { x: x, y: y + i };
-  }, 
-  verticalUp: function (x, y, i) {
-    return { x: x, y: y - i };
-  },
-  diagonal: function (x, y, i) {
-    return { x: x + i, y: y + i };
-  },
-  diagonalBack: function (x, y, i) {
-    return { x: x - i, y: y + i };
-  },
-  diagonalUp: function (x, y, i) {
-    return { x: x + i, y: y - i };
-  },
-  diagonalUpBack: function (x, y, i) {
-    return { x: x - i, y: y - i };
-  }
-};
+      for (let x = 0; x < width; x++) {
+        // Building the HTML string that will be output to the page
+        output += '<button class="square" x="' + x + '" y="' + y + '"></button>';
+        output += row[y] || '&nbsp;'; // Either output the letter at curr index[y] or a space
+        output += '</button>'; // Append the button closing tag
 
-const validOrientations = {
-  horizontal: function (x, y, h, w, l) {
-        return w >= x + l;
-      },
-      horizontalBack: function (x, y, h, w, l) {
-        return x + 1 >= l;
-      },
-      vertical: function (x, y, h, w, l) {
-        return h >= y + l;
-      },
-      verticalUp: function (x, y, h, w, l) {
-        return y + 1 >= l;
-      },
-      diagonal: function (x, y, h, w, l) {
-        return w >= x + l && h >= y + l;
-      },
-      diagonalBack: function (x, y, h, w, l) {
-        return x + 1 >= l && h >= y + l;
-      },
-      diagonalUp: function (x, y, h, w, l) {
-        return w >= x + l && y + 1 >= l;
-      },
-      diagonalUpBack: function (x, y, h, w, l) {
-        return x + 1 >= l && y + 1 >= l;
-      },
+      }
+
+      output += '</div>'; // Append the div closing tag after each row
+    }
+
+    $(element).html(output); // Output the HTML string to the page
   };
 
-const options = {
-         height: opts.height || wordList[0].length,
-          width: opts.width || wordList[0].length,
-   orientations: opts.orientations || allOrientations,
-     //fillBlanks: opts.fillBlanks !== undefined ? opts.fillBlanks : true,
-   blanks: opts.blanks !== undefined ? opts.blanks : true, // <--- Or `fillBlanks`(?)
-  // maxAttempts:  opts.maxAttempts || 3,
-  preferOverlap: opts.preferOverlap !== undefined ? opts.preferOverlap : true,
-};
+  const getWords = () => $('input.word').toArray().map(wordSel => wordSel.val.toLowerCase()).filter(word => word);
+  
+  const getBearings = (x1, x2, y1, y2) => { 
+    // 'bear' is short for 'bearing'
+    // 'bears' is short for 'bearings'
+    for (let bear in wordsearch.bears) {
+      let next = wordsearch.bears[bear];
+      let nextRel = next(x1, y1, 1);
 
-//#endregion Global 
+      //nextRel.x === x2 && nextRel.y === y2 ? bear : null; 
+      if (nextRel.x === x2 && nextRel.y === y2) {
+        return bear;
+      }
+    }
+    return null; 
+  };
 
-const WordSearch = function () {
+/* Prototypes allow you to easily define methods to all instances of a particular object. 
+The beauty is that the method is applied to the prototype, so it is only stored in the memory once, 
+but every instance of the object has access to it. */
+  const WordSearch = function (words, options) { 
+    this.boardSquares = $('.square').toArray(); 
+    this.boardSquares.length - this.boardSquares.filter(cont => cont.content.trim()).length; 
+    // Remove whitespace from the board and count the number of empty squares
+  };
+
+  WordSearch.prototype.prependTo = function (element, word) { 
+    $('<li><input class="word" value="' + (word || '') + '"></li>').prependTo(element); 
+  };
 
 
-  WordSearch.prototype.blanks = function (words, options) { };
-
-};
+  window.WordSearch = WordSearch; 
+}(document, jQuery, Wordsearch)); 

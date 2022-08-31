@@ -33,21 +33,21 @@ const placementConstraints = {
 */
 
 // make square function
-function makeSquare(element, size, character){
+const makeSquare = (element, size, character) => {
   // result string
-  var string = '';
+  let result = '';
 
   // generating 2D string based on size and character parameter
-  for (var i = 0; i < size; i++) {
-      for (var j = 0; j < size; j++) {
-          string += character;
-      }
-      string += '\n';
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      result += character;
+    }
+    result += '\n';
   }
   
   // overriding element value with the generated string
-  element.innerHTML = string;
-}
+  element.innerHTML = result;
+};
 
 // using the function
 makeSquare(document.querySelector('#square'), 5, '*');
